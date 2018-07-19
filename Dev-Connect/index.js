@@ -1,11 +1,26 @@
 const express = require('express');
-
+const mongoose = require('mongoose');
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+const auth = require('./routes/api/auth');
+const posts = require('./routes/api/posts');
+const profile = require('./routes/api/profile');
+
+// DB Config
+const { mongoURI } = require('./config/keys');
+mongoose
+  .connect(mongoURI)
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log(err));
+
+// Router config
+app.use("/api/auth", auth);
+app.use('/api/posts', posts);
+app.use("/api/profile", profile);
+
+// Routes Setup
+app.get('/', (req, res) => {
+  res.send('Hello World!');
 });
 
-const port = process.env.PORT || 3000;
-
-app.listen(port, () => console.log('Server is live'));
+app.listen(process.env.PORT || 3000, () => console.log('Server is live'));
