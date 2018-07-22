@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
 
+
 const auth = require('./routes/api/auth');
 const posts = require('./routes/api/posts');
 const profile = require('./routes/api/profile');
@@ -25,7 +26,7 @@ app.use('/api/profile', profile);
 
 // Routes Setup
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Dev Connect');
 });
 
 app.listen(process.env.PORT || 3000, () => console.log('Server is live'));
