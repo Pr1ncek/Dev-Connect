@@ -10,6 +10,8 @@ const User = require('../../models/User');
 
 // Load input validators
 const validateProfileInput = require('../../validation/profile');
+const validateExperienceInput = require('../../validation/experience');
+const validateEducationInput = require('../../validation/education');
 
 router.get('/test', (req, res) => {
   res.json({ Hello: 'from Profile' });
@@ -34,10 +36,70 @@ router.get(
         res.json(profile);
       })
       .catch(err => {
-        res.status(400).json(err);
+        res.status(404).json(err);
       });
   }
 );
+
+// @route   GET api/profile/handle/:handle
+// @desc    Get a users profile by a handle ie api/profile/princek123
+// @access  Public
+router.get('/handle/:handle', (req, res) => {
+  const errors = {};
+  Profile.findOne({ handle: req.params.handle })
+    .populate('user', ['name'])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = 'There is no profile for this user!';
+        return res.status(404).json(errors);
+      }
+      res.json(profile);
+    })
+    .catch(err => {
+      res.status(404).json(err);
+    });
+});
+
+// @route   GET api/profile/user/:user_id
+// @desc    Get a users profile by user id
+// @access  Public
+router.get('/user/:user_id', (req, res) => {
+  const errors = {};
+  Profile.findOne({ user: req.params.user_id })
+    .populate('user', ['name'])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = 'There is no profile for this user!';
+        return res.status(404).json(errors);
+      }
+      res.json(profile);
+    })
+    .catch(err => {
+      errors.noprofile = 'No profile found for this user';
+      errors.err = err;
+      res.status(404).json(errors);
+    });
+});
+
+// @route   GET api/profile/all
+// @desc    Get all profiles
+// @access  Public
+router.get('/all', (req, res) => {
+  const errors = {};
+  Profile.find()
+    .populate('user', ['name'])
+    .then(profiles => {
+      if (!profiles || profiles.length === 0) {
+        errors.noprofiles = 'There are no profiles in the database';
+        return res.status(404).json(errors);
+      }
+      res.json(profiles);
+    })
+    .catch(err => {
+      errors.err = err;
+      res.status(404).json(errors);
+    });
+});
 
 // @route   POST api/profile
 // @desc    create or edit user profile
@@ -92,6 +154,64 @@ router.post(
           }
         });
       }
+    });
+  }
+);
+
+// @route   POST api/profile/experince
+// @desc    Add experience to profile
+// @access  Private
+router.post(
+  '/experience',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateExperienceInput(req.body);
+    // Check form validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+    Profile.findOne({ user: req.user.id }, (err, profile) => {
+      if (!profile || err) {
+        errors.profile = 'No profile can be retrieved';
+        errors.err = err;
+        return res.status(404).json(errors);
+      }
+      const newExperience = {
+        ...req.body
+      };
+      profile.experience.unshift(newExperience);
+      profile.save().then(profile => {
+        res.json(profile);
+      });
+    });
+  }
+);
+
+// @route   POST api/profile/education
+// @desc    Add education to profile
+// @access  Private
+router.post(
+  '/education',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateEducationInput(req.body);
+    // Check form validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+    Profile.findOne({ user: req.user.id }, (err, profile) => {
+      if (!profile || err) {
+        errors.profile = 'No profile can be retrieved';
+        errors.err = err;
+        return res.status(404).json(errors);
+      }
+      const newEducation = {
+        ...req.body
+      };
+      profile.education.unshift(newEducation);
+      profile.save().then(profile => {
+        res.json(profile);
+      });
     });
   }
 );
