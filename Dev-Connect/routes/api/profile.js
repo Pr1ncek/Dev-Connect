@@ -13,10 +13,6 @@ const validateProfileInput = require('../../validation/profile');
 const validateExperienceInput = require('../../validation/experience');
 const validateEducationInput = require('../../validation/education');
 
-router.get('/test', (req, res) => {
-  res.json({ Hello: 'from Profile' });
-});
-
 // @route   GET api/profile
 // @desc    Get current user's profile
 // @access  Private
@@ -216,7 +212,7 @@ router.post(
   }
 );
 
-// @route   POST api/profile/experience/:id
+// @route   DELETE api/profile/experience/:id
 // @desc    Delete experience from profile
 // @access  Private
 router.delete(

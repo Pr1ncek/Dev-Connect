@@ -12,11 +12,7 @@ const User = require('../../models/User');
 const validateRegistrationInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
 
-router.get('/test', (req, res) => {
-  res.json({ Hello: 'from Auth' });
-});
-
-// @route   GET api/auth/register
+// @route   POST api/auth/register
 // @desc    Register a user
 // @access  Public
 router.post('/register', (req, res) => {
@@ -50,7 +46,7 @@ router.post('/register', (req, res) => {
   });
 });
 
-// @route   GET api/auth/login
+// @route   POST api/auth/login
 // @desc    Login user and send back JWT
 // @access  Public
 router.post('/login', (req, res) => {
