@@ -9,6 +9,7 @@ const keys = require('./config/keys');
 const auth = require('./routes/api/auth');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
+const comments = require('./routes/api/post_comments');
 
 // Bodyparser setup
 app.use(bodyparser.urlencoded({ extended: false }));
@@ -37,6 +38,7 @@ mongoose.connect(
 app.use('/api/auth', auth);
 app.use('/api/profile', profile);
 app.use('/api/posts', posts);
+app.use('/api/comments', comments);
 
 app.listen(process.env.PORT || 3000, err => {
   console.log('Server started on port 3000');
