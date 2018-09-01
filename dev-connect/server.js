@@ -40,6 +40,6 @@ app.use('/api/profile', profile);
 app.use('/api/posts', posts);
 app.use('/api/comments', comments);
 
-app.listen(process.env.PORT || 3000, err => {
+app.listen(process.env.PORT || 5000, err => {
   console.log('Server started on port 3000');
 });
