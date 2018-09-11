@@ -2,6 +2,13 @@ img {
   width: 100%;
 }
 
+.login {
+  height: 75vh;
+}
+.register {
+  height: 75vh;
+}
+
 .landing {
   position: relative;
   background: url('./img/showcase.jpg') no-repeat;
