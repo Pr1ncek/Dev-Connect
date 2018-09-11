@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux-store';
 import jwt_decode from 'jwt-decode';
@@ -12,6 +12,7 @@ import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Dashboard from './components/dashboard/Dashboard';
+import PrivateRoute from './components/common/PrivateRoute';
 import { SET_CURRENT_USER } from './actions/types';
 
 // Check for token
@@ -37,7 +38,9 @@ class App extends Component {
             <div className="container">
               <Route path="/login" component={Login} exact />
               <Route path="/register" component={Register} exact />
-              <Route path="/dashboard" component={Dashboard} exact />
+              <Switch>
+                <PrivateRoute path="/dashboard" component={Dashboard} exact />
+              </Switch>
             </div>
             <Footer />
           </div>
