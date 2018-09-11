@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import { GET_ERRORS, SET_CURRENT_USER } from '../actions/types';
+import { GET_ERRORS, SET_CURRENT_USER, GET_PROFILE } from '../actions/types';
 import setAuthToken from '../utils/set-auth-token';
 
 export const registerUser = (userData, history) => dispatch => {
@@ -45,5 +45,9 @@ export const logoutUser = () => dispatch => {
   dispatch({
     type: SET_CURRENT_USER,
     payload: {}
+  });
+  dispatch({
+    type: GET_PROFILE,
+    payload: null
   });
 };
