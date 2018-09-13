@@ -15,6 +15,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/common/PrivateRoute';
 import CreateProfile from './components/create-profile/CreateProfile';
 import { SET_CURRENT_USER } from './actions/types';
+import { logoutUser } from './actions/auth-action';
 
 // Check for token
 const token = localStorage.JWT;
@@ -23,7 +24,7 @@ if (token) {
   const decodedUser = jwt_decode(token);
   store.dispatch({ type: SET_CURRENT_USER, payload: decodedUser });
   if (decodedUser.exp < Date.now() / 1000) {
-    store.dispatch(store.dispatch.logoutUser());
+    store.dispatch(logoutUser());
     window.location.href = '/login';
   }
 }

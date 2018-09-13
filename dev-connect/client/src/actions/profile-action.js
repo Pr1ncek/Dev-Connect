@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { GET_PROFILE, PROFILE_LOADING, GET_ERRORS } from '../actions/types';
+import { logoutUser } from '../actions/auth-action';
 
 // Get current profile
 export const getCurrentProfile = () => dispatch => {
@@ -29,4 +30,17 @@ export const createProfile = (profileData, history) => dispatch => {
     .catch(err => {
       dispatch({ type: GET_ERRORS, payload: err.response.data });
     });
+};
+
+export const deleteAccount = () => dispatch => {
+  if (window.confirm('Are you sure? This will delete you account!')) {
+    axios
+      .delete('/api/profile')
+      .then(res => {
+        dispatch(logoutUser());
+      })
+      .catch(err => {
+        dispatch({ type: GET_ERRORS, payload: err.response.data });
+      });
+  }
 };
