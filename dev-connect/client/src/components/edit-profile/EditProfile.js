@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
@@ -172,6 +172,9 @@ class EditProfile extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
+              <Link className="btn btn-light" to="/dashboard">
+                Go Back
+              </Link>
               <h1 className="display-4 text-center">Edit Your Profile</h1>
               <p className="lead text-center">
                 Let's get some information to make your profile stand out

@@ -55,3 +55,42 @@ export const addExperience = (data, history) => dispatch => {
       dispatch({ type: GET_ERRORS, payload: err.response.data });
     });
 };
+
+export const addEducation = (data, history) => dispatch => {
+  axios
+    .post('/api/profile/education', data)
+    .then(response => {
+      history.push('/dashboard');
+    })
+    .catch(err => {
+      dispatch({ type: GET_ERRORS, payload: err.response.data });
+    });
+};
+
+export const deleteExperience = id => dispatch => {
+  axios
+    .delete('/api/profile/experience/' + id)
+    .then(response => {
+      dispatch({
+        type: GET_PROFILE,
+        payload: response.data
+      });
+    })
+    .catch(err => {
+      dispatch({ type: GET_ERRORS, payload: err.response.data });
+    });
+};
+
+export const deleteEducation = id => dispatch => {
+  axios
+    .delete('/api/profile/education/' + id)
+    .then(response => {
+      dispatch({
+        type: GET_PROFILE,
+        payload: response.data
+      });
+    })
+    .catch(err => {
+      dispatch({ type: GET_ERRORS, payload: err.response.data });
+    });
+};

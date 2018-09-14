@@ -16,6 +16,7 @@ import PrivateRoute from './components/common/PrivateRoute';
 import CreateProfile from './components/create-profile/CreateProfile';
 import EditProfile from './components/edit-profile/EditProfile';
 import AddExperience from './components/add-credentials/AddExperience';
+import AddEducation from './components/add-credentials/AddEducation';
 import { SET_CURRENT_USER } from './actions/types';
 import { logoutUser } from './actions/auth-action';
 
@@ -63,6 +64,13 @@ class App extends Component {
                 <PrivateRoute
                   path="/add-experience"
                   component={AddExperience}
+                  exact
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  path="/add-education"
+                  component={AddEducation}
                   exact
                 />
               </Switch>

@@ -4,7 +4,7 @@ const isEmpty = require('./is-empty');
 module.exports = function validateExperienceInput(data) {
   let errors = {};
 
-  let { title, company, from } = data;
+  let { title, company, from, location } = data;
 
   title = isEmpty(title) ? '' : title;
   company = isEmpty(company) ? '' : company;
@@ -20,6 +20,10 @@ module.exports = function validateExperienceInput(data) {
 
   if (validator.isEmpty(from)) {
     errors.from = 'From date is required';
+  }
+
+  if (validator.isEmpty(location)) {
+    errors.location = 'Location is required';
   }
 
   return {

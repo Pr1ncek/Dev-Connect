@@ -42,7 +42,6 @@ class AddExperience extends Component {
     const expData = {
       ...this.state
     };
-    console.log(expData);
     this.props.addExperience(expData, this.props.history);
   };
 
