@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { GET_PROFILE, PROFILE_LOADING, GET_ERRORS } from '../actions/types';
-import { logoutUser } from '../actions/auth-action';
+import { GET_PROFILE, PROFILE_LOADING, GET_ERRORS } from './types';
+import { logoutUser } from './auth-action';
 
 // Get current profile
 export const getCurrentProfile = () => dispatch => {
@@ -43,4 +43,15 @@ export const deleteAccount = () => dispatch => {
         dispatch({ type: GET_ERRORS, payload: err.response.data });
       });
   }
+};
+
+export const addExperience = (data, history) => dispatch => {
+  axios
+    .post('/api/profile/experience', data)
+    .then(response => {
+      history.push('/dashboard');
+    })
+    .catch(err => {
+      dispatch({ type: GET_ERRORS, payload: err.response.data });
+    });
 };

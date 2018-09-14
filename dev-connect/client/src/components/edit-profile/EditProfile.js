@@ -6,9 +6,9 @@ import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import InputGroup from '../common/InputGroup';
 import SelectListGroup from '../common/SelectListGroup';
-import { createProfile } from '../../actions/profile-action';
+import { createProfile, getCurrentProfile } from '../../actions/profile-action';
 
-class CreateProfile extends Component {
+class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,6 +37,40 @@ class CreateProfile extends Component {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
+    if (nextProps.profile.profile) {
+      const profile = nextProps.profile.profile;
+      const skillsCSV = profile.skills.join(',');
+      const {
+        company = '',
+        website = '',
+        location = '',
+        githubusername = '',
+        bio = '',
+        handle = '',
+        status = 0,
+        social
+      } = profile;
+
+      this.setState({
+        handle: handle,
+        company: company,
+        website: website,
+        location: location,
+        status: status,
+        skills: skillsCSV,
+        githubusername: githubusername,
+        bio: bio,
+        twitter: social.twitter ? social.twitter : '',
+        facebook: social.facebook ? social.facebook : '',
+        linkedin: social.linkedin ? social.linkedin : '',
+        youtube: social.youtube ? social.youtube : '',
+        instagram: social.instagram ? social.instagram : ''
+      });
+    }
+  }
+
+  componentDidMount() {
+    this.props.getCurrentProfile();
   }
 
   onSubmit(e) {
@@ -138,7 +172,7 @@ class CreateProfile extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Create Your Profile</h1>
+              <h1 className="display-4 text-center">Edit Your Profile</h1>
               <p className="lead text-center">
                 Let's get some information to make your profile stand out
               </p>
@@ -240,9 +274,10 @@ class CreateProfile extends Component {
   }
 }
 
-CreateProfile.propTypes = {
+EditProfile.propTypes = {
   profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   createProfile: PropTypes.func.isRequired
 };
 
@@ -253,5 +288,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createProfile }
-)(withRouter(CreateProfile));
+  { createProfile, getCurrentProfile }
+)(withRouter(EditProfile));
