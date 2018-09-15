@@ -21,6 +21,7 @@ import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
 import { SET_CURRENT_USER } from './actions/types';
 import { logoutUser } from './actions/auth-action';
+import NotFound from './components/not-found/NotFound';
 
 // Check for token
 const token = localStorage.JWT;
@@ -49,35 +50,31 @@ class App extends Component {
               <Route path="/profile/:handle" component={Profile} exact />
               <Switch>
                 <PrivateRoute path="/dashboard" component={Dashboard} exact />
-              </Switch>
-              <Switch>
                 <PrivateRoute
                   path="/create-profile"
                   component={CreateProfile}
                   exact
                 />
-              </Switch>
-              <Switch>
+
                 <PrivateRoute
                   path="/edit-profile"
                   component={EditProfile}
                   exact
                 />
-              </Switch>
-              <Switch>
+
                 <PrivateRoute
                   path="/add-experience"
                   component={AddExperience}
                   exact
                 />
-              </Switch>
-              <Switch>
+
                 <PrivateRoute
                   path="/add-education"
                   component={AddEducation}
                   exact
                 />
               </Switch>
+              <Route exact path="/not-found" component={NotFound} />
             </div>
             <Footer />
           </div>
