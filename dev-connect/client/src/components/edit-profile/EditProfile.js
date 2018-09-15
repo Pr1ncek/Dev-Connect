@@ -19,7 +19,7 @@ class EditProfile extends Component {
       location: '',
       status: '',
       skills: '',
-      githubusername: '',
+      github: '',
       bio: '',
       twitter: '',
       facebook: '',
@@ -44,7 +44,7 @@ class EditProfile extends Component {
         company = '',
         website = '',
         location = '',
-        githubusername = '',
+        github = '',
         bio = '',
         handle = '',
         status = 0,
@@ -58,7 +58,7 @@ class EditProfile extends Component {
         location: location,
         status: status,
         skills: skillsCSV,
-        githubusername: githubusername,
+        github: github,
         bio: bio,
         twitter: social.twitter ? social.twitter : '',
         facebook: social.facebook ? social.facebook : '',
@@ -83,7 +83,7 @@ class EditProfile extends Component {
       location: this.state.location,
       status: this.state.status,
       skills: this.state.skills,
-      githubusername: this.state.githubusername,
+      github: this.state.github,
       bio: this.state.bio,
       twitter: this.state.twitter,
       facebook: this.state.facebook,
@@ -233,10 +233,10 @@ class EditProfile extends Component {
                 />
                 <TextFieldGroup
                   placeholder="Github Username"
-                  name="githubusername"
-                  value={this.state.githubusername}
+                  name="github"
+                  value={this.state.github}
                   onChange={this.onChange}
-                  error={errors.githubusername}
+                  error={errors.github}
                   info="If you want your latest repos and a Github link, include your username"
                 />
                 <TextAreaFieldGroup

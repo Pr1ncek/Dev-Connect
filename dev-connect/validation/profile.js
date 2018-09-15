@@ -7,6 +7,10 @@ module.exports = function validateProfileInput(data) {
   data.handle = !isEmpty(data.handle) ? data.handle : '';
   data.status = !isEmpty(data.status) ? data.status : '';
   data.skills = !isEmpty(data.skills) ? data.skills : '';
+  data.company = !isEmpty(data.company) ? data.company : '';
+  data.website = !isEmpty(data.website) ? data.website : '';
+  data.github = !isEmpty(data.github) ? data.github : '';
+  data.location = !isEmpty(data.location) ? data.location : '';
 
   if (!validator.isLength(data.handle, { min: 2, max: 40 })) {
     errors.handle = 'Handle needs to between 2 and 40 characters';
@@ -22,6 +26,19 @@ module.exports = function validateProfileInput(data) {
 
   if (validator.isEmpty(data.skills)) {
     errors.skills = 'Skills field is required';
+  }
+
+  if (validator.isEmpty(data.location)) {
+    errors.location = 'Location field is required';
+  }
+  if (validator.isEmpty(data.company)) {
+    errors.company = 'Company field is required';
+  }
+  if (validator.isEmpty(data.website)) {
+    errors.website = 'Website field is required';
+  }
+  if (validator.isEmpty(data.github)) {
+    errors.github = 'Githbub field is required';
   }
 
   if (!isEmpty(data.website)) {

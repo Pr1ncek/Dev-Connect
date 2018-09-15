@@ -11,13 +11,16 @@ const ProfileSchema = new mongoose.Schema({
     max: 40
   },
   company: {
-    type: String
+    type: String,
+    required: true
   },
   website: {
-    type: String
+    type: String,
+    required: true
   },
   location: {
-    type: String
+    type: String,
+    required: true
   },
   status: {
     type: String,
@@ -31,7 +34,8 @@ const ProfileSchema = new mongoose.Schema({
     type: String
   },
   github: {
-    type: String
+    type: String,
+    required: true
   },
   experience: [
     {
