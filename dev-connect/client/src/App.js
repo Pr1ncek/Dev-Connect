@@ -22,6 +22,7 @@ import Profile from './components/profile/Profile';
 import { SET_CURRENT_USER } from './actions/types';
 import { logoutUser } from './actions/auth-action';
 import NotFound from './components/not-found/NotFound';
+import Posts from './components/posts/Posts';
 
 // Check for token
 const token = localStorage.JWT;
@@ -73,6 +74,7 @@ class App extends Component {
                   component={AddEducation}
                   exact
                 />
+                <PrivateRoute path="/feed" component={Posts} exact />
               </Switch>
               <Route exact path="/not-found" component={NotFound} />
             </div>
