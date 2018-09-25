@@ -70,7 +70,7 @@ router.post(
 );
 
 // @route   POST api/posts/like/:postId
-// @desc    Delete a post
+// @desc    Like a post
 // @access  Private
 router.post(
   '/like/:postId',
