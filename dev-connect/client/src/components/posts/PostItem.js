@@ -2,10 +2,24 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { deletePost, likePost } from '../../actions/post-action';
 import classnames from 'classnames';
 class PostItem extends Component {
   onDeleteClick(id) {
-    console.log(id);
+    this.props.deletePost(id);
+  }
+
+  onLikeClick(id) {
+    this.props.likePost(id);
+  }
+
+  checkIfLiked(likes) {
+    const { auth } = this.props;
+    if (likes.findIndex(like => like.user === auth.user.id) < 0) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   render() {
@@ -18,12 +32,17 @@ class PostItem extends Component {
           </div>
           <div className="col-md-9">
             <p className="lead">{post.text}</p>
-            <button type="button" className="btn btn-light mr-1">
-              <i className="text-info fas fa-thumbs-up" />
+            <button
+              type="button"
+              className="btn btn-light mr-1"
+              onClick={this.onLikeClick.bind(this, post._id)}
+            >
+              <i
+                className={classnames('fas fa-thumbs-up', {
+                  'text-info': this.checkIfLiked(post.likes)
+                })}
+              />
               <span className="badge badge-light">{post.likes.length}</span>
-            </button>
-            <button type="button" className="btn btn-light mr-1">
-              <i className="text-secondary fas fa-thumbs-down" />
             </button>
             <Link to={`/post/${post._id}`} className="btn btn-info mr-1">
               Comments
@@ -46,7 +65,9 @@ class PostItem extends Component {
 
 PostItem.propTypes = {
   auth: PropTypes.object.isRequired,
-  post: PropTypes.object.isRequired
+  post: PropTypes.object.isRequired,
+  deletePost: PropTypes.func.isRequired,
+  likePost: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -55,5 +76,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  { deletePost, likePost }
 )(PostItem);
