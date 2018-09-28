@@ -64,6 +64,24 @@ export const getPost = id => dispatch => {
     );
 };
 
+// Comment on a post
+export const addComment = (id, newComment) => dispatch => {
+  axios
+    .post(`/api/comments/${id}`, newComment)
+    .then(response =>
+      dispatch({
+        type: GET_POST,
+        payload: response.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 // Like Post
 export const likePost = id => dispatch => {
   axios

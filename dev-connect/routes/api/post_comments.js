@@ -28,9 +28,7 @@ router.post(
     };
     Post.findById(postId, (err, foundPost) => {
       if (!foundPost || err) {
-        return res
-          .status(404)
-          .json({ Error: err, Message: 'Comment not found' });
+        return res.status(404).json({ Error: err, Message: 'Post not found' });
       }
       foundPost.comments.push(newComment);
       foundPost.save().then(savedPost => {
