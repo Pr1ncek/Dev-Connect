@@ -10,7 +10,12 @@ const postSchema = new mongoose.Schema({
     required: true
   },
   name: {
-    type: String
+    type: String,
+    required: true
+  },
+  profileHandle: {
+    type: String,
+    required: true
   },
   likes: [
     {
@@ -32,6 +37,10 @@ const postSchema = new mongoose.Schema({
       },
       name: {
         type: String
+      },
+      profileHandle: {
+        type: String,
+        required: true
       },
       date: {
         type: Date,

@@ -82,6 +82,24 @@ export const addComment = (id, newComment) => dispatch => {
     );
 };
 
+// Comment on a post
+export const deleteComment = (postId, commentId) => dispatch => {
+  axios
+    .delete(`/api/comments/${postId}/${commentId}`)
+    .then(response =>
+      dispatch({
+        type: GET_POST,
+        payload: response.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 // Like Post
 export const likePost = id => dispatch => {
   axios

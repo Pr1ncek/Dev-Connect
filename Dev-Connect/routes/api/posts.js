@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const Post = require('../../models/Post');
+const Profile = require('../../models/Profile');
 const passport = require('passport');
 
 // Load form validatorsq
@@ -45,26 +46,34 @@ router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    console.log(req.body);
     const { errors, isValid } = validatePostInput(req.body);
 
     if (!isValid) {
       return res.status(406).json(errors);
     }
 
-    const newPost = new Post({
-      user: req.user.id,
-      text: req.body.text,
-      name: req.user.name
-    });
+    let profileHandle;
+    Profile.findOne({ user: req.user.id })
+      .then(response => {
+        profileHandle = response.handle;
+        const newPost = new Post({
+          user: req.user.id,
+          text: req.body.text,
+          name: req.user.name,
+          profileHandle: profileHandle
+        });
 
-    newPost
-      .save()
-      .then(savedPost => {
-        res.json(savedPost);
+        newPost
+          .save()
+          .then(savedPost => {
+            res.json(savedPost);
+          })
+          .catch(err => {
+            res.status(400).json(err);
+          });
       })
       .catch(err => {
-        res.status(400).json(err);
+        console.log(err);
       });
   }
 );

@@ -3,6 +3,7 @@ const passport = require('passport');
 const router = express.Router();
 
 const Post = require('../../models/Post');
+const Profile = require('../../models/Profile');
 
 const commentValidator = require('../../validation/post');
 
@@ -21,24 +22,36 @@ router.post(
 
     const { text } = req.body;
     const { postId } = req.params;
-    const newComment = {
-      text: text,
-      name: req.user.name,
-      user: req.user.id
-    };
-    Post.findById(postId, (err, foundPost) => {
-      if (!foundPost || err) {
-        return res.status(404).json({ Error: err, Message: 'Post not found' });
-      }
-      foundPost.comments.push(newComment);
-      foundPost.save().then(savedPost => {
-        res.status(200).json(savedPost);
+
+    let profileHandle;
+    Profile.findOne({ user: req.user.id })
+      .then(response => {
+        profileHandle = response.handle;
+        const newComment = {
+          text: text,
+          name: req.user.name,
+          user: req.user.id,
+          profileHandle: profileHandle
+        };
+        Post.findById(postId, (err, foundPost) => {
+          if (!foundPost || err) {
+            return res
+              .status(404)
+              .json({ Error: err, Message: 'Post not found' });
+          }
+          foundPost.comments.push(newComment);
+          foundPost.save().then(savedPost => {
+            res.status(200).json(savedPost);
+          });
+        });
+      })
+      .catch(err => {
+        console.log(err);
       });
-    });
   }
 );
 
-// @route   DELETE api/comments/:postId
+// @route   DELETE api/comments/:postId/:commentId
 // @desc    Delete a comment on a post
 // @access  Private
 router.delete(

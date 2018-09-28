@@ -28,7 +28,12 @@ class PostItem extends Component {
       <div className="card card-body mb-3">
         <div className="row">
           <div className="col-md-3">
-            <p className="text-center">{post.name}</p>
+            <Link
+              to={`/profile/${post.profileHandle}`}
+              className="text-center font-weight-bold"
+            >
+              {post.name}
+            </Link>
           </div>
           <div className="col-md-9">
             <p className="lead">{post.text}</p>
