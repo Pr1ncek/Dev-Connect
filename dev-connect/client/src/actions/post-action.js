@@ -6,7 +6,8 @@ import {
   GET_POSTS,
   GET_POST,
   POST_LOADING,
-  DELETE_POST
+  DELETE_POST,
+  CLEAR_ERRORS
 } from './types';
 
 // Add a post
@@ -129,4 +130,10 @@ export const deletePost = id => dispatch => {
         payload: err.response.data
       })
     );
+};
+
+export const clearErrors = () => {
+  return {
+    type: CLEAR_ERRORS
+  };
 };
